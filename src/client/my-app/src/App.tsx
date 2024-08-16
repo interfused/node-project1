@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import SearchForm from "./components/SearchForm";
 import { Sidebar } from "./components/Sidebar";
 import { SearchContext } from "./useContext/context";
 import { SearchParams } from "./useContext/SearchParams";
+import HomeContent from "./components/home/homecontent";
+import Header from "./components/Header";
 
 function App() {
   let [displaySection, setDisplaySection] = useState("Intro");
@@ -14,21 +16,11 @@ function App() {
     searchString: "my first search text",
   });
 
+  const something = useContext(SearchContext);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header />
       <div>
         <p>
           Section to View: <b>{displaySection}</b>
@@ -39,6 +31,8 @@ function App() {
             setDisplaySection(displaySection)
           }
         />
+        {displaySection.toLowerCase() === "home" && <HomeContent></HomeContent>}
+
         <SearchContext.Provider value={sParams}>
           <SearchForm></SearchForm>
         </SearchContext.Provider>
